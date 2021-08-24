@@ -186,8 +186,18 @@ const quizEnd = () => {
 
 const renderScoreboard = function (event) {
   event.preventDefault();
+
   let username = document.querySelector("input[name='your-name'").value;
   let scoreTotal = answersCorrect;
+
+  scores.push([username, scoreTotal]);
+
+  for (i = 0; i < scores.length; i++) {
+    score = scores[i];
+    let listEl = document.createElement("li");
+    listEl.textContent = `${score[0]} earned ${score[1]}`;
+    answerList.append(listEl);
+  }
 
   formEl.innerHTML = "";
 };
@@ -253,4 +263,7 @@ answerList.addEventListener("click", (event) => {
   quiz(event.target);
 });
 
-formEl.addEventListener("submit", renderScoreboard);
+formEl.addEventListener("submit", (event) => {
+  event.preventDefault();
+  renderScoreboard(event);
+});
